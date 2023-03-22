@@ -1,0 +1,62 @@
+/* 文章页背景 */
+.layout_post>#post {
+    /* 以下代表透明度为0.5 可以自行修改*/
+    background: rgba(255,255,255,.5);
+}
+/* 所有页面背景 */
+#aside_content .card-widget{
+    /* 以下代表透明度为0.5 */
+    background: rgba(255,255,255,.5);
+}
+.read-mode .layout_post>#post.layout_post>#post {
+    background: rgba(255,255,255,.5);
+}
+.layout_post>#post {
+    background: rgba(255,255,255,.5);
+}
+.layout_post>#page {
+    background: rgba(255,255,255,.5);
+}
+.layout_page>div:first-child:not(.recent-posts){
+    background: rgba(255,255,255,.5);
+}
+#recent-posts>.recent-post-item {
+    background: rgba(255,255,255,.5);
+}
+.layout_post>#post {
+    background: rgba(255,255,255,.1);
+}
+#body-wrap {
+    /* 背景图像的地址（url括号里）  */
+    background: url('/img/bki.jpg');
+    /* 背景图像不重复 */
+    background-repeat: no-repeat;
+    /* 背景图像大小 */
+    background-size: cover;
+  }
+#content-inner{
+        /* 设置边距 */
+        padding: 40px 90px;
+}
+#page-header{
+    background: transparent;
+    background-image: ('');
+}
+#footer{
+    background: transparent;
+}
+#footer-wrap{
+    background: transparent;
+}
+#page{
+    background: rgba(255,255,255,.5);
+}
+#archive{
+    background: rgba(255,255,255,.5);
+}
+#aplayer-xFZeggHR{
+    padding: 20px;
+}
+#aside-content .card-widget{
+    background: rgba(255,255,255,.5);
+}
