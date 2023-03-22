@@ -29,6 +29,156 @@
     
     
     <entry>
+      <title>CSS浮动</title>
+      <link href="/2023/03/22/CSS%E6%B5%AE%E5%8A%A8/"/>
+      <url>/2023/03/22/CSS%E6%B5%AE%E5%8A%A8/</url>
+      
+        <content type="html"><![CDATA[<h2 id="一、不同元素的float浮动"><a href="#一、不同元素的float浮动" class="headerlink" title="一、不同元素的float浮动##"></a>一、不同元素的float浮动##</h2><p>图片使用float可以实现图片环绕效果</p><p>块级元素使用实现同行排列</p><p>行内元素使用浮动可以设置width，height属性，同时同方向对齐盒子</p><h2 id="二、float脱离标准流"><a href="#二、float脱离标准流" class="headerlink" title="二、float脱离标准流##"></a><strong>二、float脱离标准流</strong>##</h2><p>设置了浮动元素脱离标准流</p><p>元素不再占用原来的空间，如果父元素没有设置宽高，需要原来元素撑开，会导致父元素高度塌陷</p><p>同时影响父元素后面兄弟元素的布局</p><p>##<strong>三、</strong>清除浮动的方法##</p><p>1.伪元素清除浮动</p><p>给父元素设置</p><p>.clearfix::after{</p><pre><code>display: block;  /* 使其成为块级元素后*/content: &quot;&quot;;    /*为伪元素加入空内容，以便伪元素中不会有内容显示在页面中*/height: 0;       /* 为使伪元素不影响页面布局，将伪元素高度设置为0*/clear: both;     /* 清除浮动*/&#125;.clearfix &#123; *zoom:1; &#125;  /*兼容IE6、IE7 */</code></pre><p>2.浮动父元素添加</p><p>.clearfix{ overflow：hidden&#x2F;auto }</p><p>3.额外元素法</p><p>在需要清除浮动的元素后面添加一个空的div（不推荐）</p><p>因为它没有浏览器默认样式，没有特殊功能，而且一般不会被css样式化，所以这种方法也是比较常见和常用的方法。但是不太推荐，因为会造成多余的dom。</p><blockquote><p><code>clear：both</code></p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> CSS </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CSS </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>CSS盒模型</title>
+      <link href="/2023/03/22/CSS%E7%9B%92%E6%A8%A1%E5%9E%8B/"/>
+      <url>/2023/03/22/CSS%E7%9B%92%E6%A8%A1%E5%9E%8B/</url>
+      
+        <content type="html"><![CDATA[<p><strong>盒模型是CSS控制页面布局的一个非常重要的概念，页面上的所有元素，包括文本、图像、超级链接、div块等，都可以被看作盒子。</strong></p><p><strong>由盒子将页面中的元素包含在一个矩形区域内，这个矩形区域则称为“盒模型”。</strong></p><p>一、盒模型的组成<br>内容</p><p>内容（content）是盒子里的“物品”，是盒模型中必须有的部分，可以是网页上的任何元素，如文本、图片、视频等各种信息。</p><p>内外边距</p><p>分为外边距（margin）是盒模型与其他盒模型之间的距离，内边距（padding）是盒模型边框border与content内容的距离，</p><p>定义盒模型边界语法格式如下（分多种使用方式，具体使用依据应用场景）：</p><p>margin: 上下距离，左右距离;  </p><p>margin: 四周边距；</p><p>margin：top，right，bottom，left ；</p><p>padding类似</p><p>边框</p><p>边框（border）是盒模型中介于填充（padding）和边界（margin）之间的分界线。</p><p>（1）边框样式</p><p>（2）边框宽度</p><p>（3）边框颜色</p><p>举个例子</p><p>代码</p><pre><code>&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;meta charset=utf-8&gt;&lt;style type=&quot;text/css&quot;&gt;div &#123;width: 200px;background-color: #EFEFEF;margin: 10px;padding: 10px;&#125;.b1 &#123;border-style: inset;border-width: 10px;border-color: rgb(100%, 0%, 0%);&#125;.b2 &#123;border-style: double;border-width: thick;border-color: black;;&#125;.b3 &#123;border: groove thin rgb(255, 255, 0);&#125;.b4 &#123;border: #000 medium dashed;&#125;&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;div class=&quot;b1&quot;&gt;边框设置1&lt;/div&gt;&lt;div class=&quot;b2&quot;&gt;边框设置2&lt;/div&gt;&lt;div class=&quot;b3&quot;&gt;边框设置3&lt;/div&gt;&lt;div class=&quot;b4&quot;&gt;边框设置4&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;</code></pre><p>二、盒的类型<br>CSS中的盒子可分为block类型与inline类型，使用display属性来定义。</p><p>代码</p><pre><code>&lt;!DOCTYPE HTML&gt;&lt;html&gt;&lt;head&gt;&lt;meta charset=utf-8&gt;&lt;title&gt;block、inline、inline-block对比&lt;/title&gt;&lt;style&gt;div.div1 &#123;display: block; /*div默认值*/width: 120px;height: 40px;margin: 2px;background-color: green;&#125;div.div2 &#123;display: inline; /*修改为inline类型*/width: 120px;height: 40px;margin: 2px;background-color: blue;&#125;div.div3 &#123;display: inline-block; /*inline-block类型*/width: 120px;height: 40px;margin: 2px;background-color: red;&#125;div.div4 &#123;display: inline-block;margin: 2px;background-color: grey;&#125;&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;div class=&quot;div1&quot;&gt;block类型&lt;/div&gt;&lt;div class=&quot;div1&quot;&gt;block类型&lt;/div&gt;&lt;hr/&gt;&lt;div class=&quot;div2&quot;&gt;inline类型&lt;/div&gt;&lt;div class=&quot;div2&quot;&gt;inline类型&lt;/div&gt;&lt;hr/&gt;&lt;h3&gt;inline-block类型，设置width和height属性&lt;/h3&gt;&lt;div class=&quot;div3&quot;&gt;inline-block类型&lt;/div&gt;&lt;div class=&quot;div3&quot;&gt;inline-block类型&lt;/div&gt;&lt;hr/&gt;&lt;h3&gt;inline-block类型，无width和height属性&lt;/h3&gt;&lt;div class=&quot;div4&quot;&gt;inline-block类型&lt;/div&gt;&lt;div class=&quot;div4&quot;&gt;inline-block类型&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;</code></pre><p> block类型是独占一行，而inline是可一个多个在一行，拓展的inline-block则是把block转换成与inline相似</p><p>三、标准盒模型和怪异盒模型</p><p>标准盒模型总宽度&#x3D;width+margin(左右)+padding（左右）border（左右）</p><p>怪异盒模型总宽度&#x3D;width+margin（左右）（width已经包含了padding和border值）</p><p>可以使用CSS box-sizing改变</p><p>content-box（标准盒子）</p><p>border-box（怪异盒子）</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> CSS </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CSS </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>html语义化</title>
+      <link href="/2023/03/22/html%E8%AF%AD%E4%B9%89%E5%8C%96/"/>
+      <url>/2023/03/22/html%E8%AF%AD%E4%B9%89%E5%8C%96/</url>
+      
+        <content type="html"><![CDATA[<p>##<strong>一、什么是HTML语义化</strong>##</p><p>什么的HTML语义化，顾名思义，HTML语义化就是可以不通过了解HTML的内容，就可以知道这个部分所代表的的意义。</p><p>通过html语义化构建页面，可以避免大篇幅使用无语义的标签，样式文件未加载时，页面结构清晰。 有利于SEO，搜索引擎根据标签来确定上下文和各个关键字的权重。</p><p>##<strong>二、什么是HTML语义化标签</strong>##</p><p>语义化标签比较容易理解：简单举一个例子就很容易理解：</p><p></p> //代表这是一行文字语义化标签优势：<p>利于页面内容结构化、利于无CSS页面可读、利于seo、利于代码可读</p><p>##<strong>三、常见语义化标签</strong>##</p><title>：定义文档的标题（注：只能在head标签内出现）。<hn>：h1~h6，分级标题，<h1> 与 <title> 协调有利于搜索引擎优化。<ul>：无序列表。<ol>：有序列表。<header>：页眉通常包括网站标志、主导航、全站链接以及搜索框。<nav>：标记导航。<main>：页面主要内容，一个页面只能使用一次。如果是web应用，则包围其主要功能。<article>：定义外部的内容，其中的内容独立于文档的其余部分。<section>：定义文档中的节（section、区段）。比如章节、页眉、页脚或文档中的其他部分。<aside>：定义其所处内容之外的内容。如侧栏、文章的一组链接、广告、友情链接、相关产品列表等。<footer>：页脚，只有当父级是body时，才是整个页面的页脚。<small>：呈现小号字体效果，指定细则，输入免责声明、注解、署名、版权。<strong>：和 em 标签一样，用于强调文本，但它强调的程度更强一些。<em>：将其中的文本表示为强调的内容，表现为斜体。<mark>：使用黄色突出显示部分文本。<figure>：规定独立的流内容（图像、图表、照片、代码等等）（默认有40px左右margin）。<figcaption>：定义 figure 元素的标题，应该被置于 figure 元素的第一个或最后一个子元素的位置。<cite>：表示所包含的文本对某个参考文献的引用，比如书籍或者杂志的标题。<blockquoto>：定义块引用，块引用拥有它们自己的空间。<q>：短的引述（跨浏览器问题，尽量避免使用）。<time>：datetime属性遵循特定格式，如果忽略此属性，文本内容必须是合法的日期或者时间格式。<abbr>：简称或缩写。<dfn>：定义术语元素，与定义必须紧挨着，可以在描述列表dl元素中使用。<address>：作者、相关人士或组织的联系信息（电子邮件地址、指向联系信息页的链接）。<del>：移除的内容，定义文档中已被删除的文本。<ins>：添加的内容，定义文档中添加的文本<code>：标记代码。<meter>：定义已知范围或分数值内的标量测量。（Internet Explorer 不支持 meter 标签）<progress>：定义运行中的进度（进程）。]]></content>
+      
+      
+      <categories>
+          
+          <category> 前端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> HTML </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>TypeScript初识</title>
+      <link href="/2023/03/22/TS1/"/>
+      <url>/2023/03/22/TS1/</url>
+      
+        <content type="html"><![CDATA[<h1 id="TypeScript-基础语法"><a href="#TypeScript-基础语法" class="headerlink" title="TypeScript 基础语法"></a>TypeScript 基础语法</h1><p>TypeScript 程序由以下几个部分组成：</p><ul><li>模块</li><li>函数</li><li>变量</li><li>语句和表达式</li><li>注释</li></ul><h3 id="第一个-TypeScript-程序"><a href="#第一个-TypeScript-程序" class="headerlink" title="第一个 TypeScript 程序"></a>第一个 TypeScript 程序</h3><p>我们可以使用以下 TypeScript 程序来输出 “Hello World” ：</p><blockquote><p>const hello : string &#x3D; “Hello World!”</p><p>console.log(hello)</p></blockquote><p>最后我们使用 node 命令来执行该 js 代码。</p><blockquote><p>$ node Runoob.jsHello World</p><p>Hello World</p></blockquote><p>TypeScript 面向对象编程实例：</p><p><code>class Site &#123;    name():void &#123;       console.log(&quot;Runoob&quot;)    &#125; &#125; var obj = new Site(); obj.name();</code></p><p>以上实例定义了一个类 Site，该类有一个方法 name()，该方法在终端上输出字符串 Runoob。</p><p>new 关键字创建类的对象，该对象调用方法 name()。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 学习 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> TypeScript </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Vue-Cli脚手架</title>
+      <link href="/2023/03/22/vue-cli/"/>
+      <url>/2023/03/22/vue-cli/</url>
+      
+        <content type="html"><![CDATA[<p>一、什么是VueCLI<br>1、如果你只是简单写几个Vue的Demo程序，那么你不需要VueCLI脚手架。<br>2、如果你在开发大型项目，那么你需要，并且必然需要使用VueCLI。<br>使用Vue.js开发大型应用时，我们需要考虑代码目录结构、项目结构和部署、热加载、代码单元测试等事情。<br>如果每个项目都要手动完成这些工作，那么无疑效率比较低效，所以通常我们会使用一些脚手架工具来帮助完成这些事情。<br>3、CLI是什么意思？<br>CLI是Commond-Line Interface，翻译为命令行界面，俗称脚手架。<br>VueCLI是一个官方发布vue.js项目脚手架。<br>使用VueCLI可以快速搭建vue开发环境以及对应的webpack配置。</p><p>4、脚手架依赖于node.js和webpack<br>二、安装Vue CLI脚手架<br>&#x2F;&#x2F;默认安装脚手架3<br>npm install -g @vue&#x2F;cli</p><p>&#x2F;&#x2F;安装脚手架2<br>npm install -g @vue&#x2F;cli-init</p><p>&#x2F;&#x2F;脚手架2创建项目<br>vue init webpack my-project</p><p>&#x2F;&#x2F;脚手架3创建项目<br>vue create my-project</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 学习 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Vue </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>VueX学习</title>
+      <link href="/2023/03/22/vueX/"/>
+      <url>/2023/03/22/vueX/</url>
+      
+        <content type="html"><![CDATA[<p>一.Vuex是什么？<br> vuex官方解释<br>Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式 + 库。它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。</p><p>二.使用场景<br>Vuex 可以帮助我们管理共享状态，并附带了更多的概念和框架。这需要对短期和长期效益进行权衡。</p><p>如果您不打算开发大型单页应用，使用 Vuex 可能是繁琐冗余的。确实是如此——如果您的应用够简单，您最好不要使用 Vuex。一个简单的 store 模式就足够您所需了。但是，如果您需要构建一个中大型单页应用，您很可能会考虑如何更好地在组件外部管理状态，Vuex 将会成为自然而然的选择。</p><p>三.安装<br>方法一：<br>在脚手架 创建项目时勾选vuex的选项系统会自动创建</p><p> 方法二：npm  或Yarn安装<br>npm install vuex@next –save<br>yarn add vuex@next –save</p><p>四.配置<br>如果采用脚手架方式进行创建，无需任何操作，可以忽略此步骤</p><p>新建store文件-&gt;index.js，进行如下配置，在main.js中进行引入</p><p>import Vue from ‘vue’<br>import Vuex from ‘vuex’</p><p>Vue.use(Vuex)</p><p>export default new Vuex.Store({<br>  &#x2F;&#x2F;数据，相当于data<br>  state: {<br>​<br>  },<br>  getters: {<br>​<br>  },<br>  &#x2F;&#x2F;里面定义方法，操作state方发<br>  mutations: {<br>​<br>  },<br>  &#x2F;&#x2F; 操作异步操作mutation<br>  actions: {<br>​<br>  },<br>  modules: {<br>​<br>  },<br>})</p><p> main.js中</p><p> 五.核心概念<br>vuex中一共有五个状态 State  Getter  Mutation   Action   Module  下面进行详细讲解</p><p>5.1  State<br>提供唯一的公共数据源，所有共享的数据统一放到store的state进行储存，相似与data</p><p> 在vuex中state中定义数据，可以在任何组件中进行调用</p><p>import Vue from ‘vue’<br>import Vuex from ‘vuex’</p><p>Vue.use(Vuex)</p><p>export default new Vuex.Store({<br>  &#x2F;&#x2F;数据，相当于data<br>  state: {<br>    name:”张三”,<br>    age:12,<br>    count:0<br>  },<br>})<br> 调用：</p><p>方法一：</p><p>在标签中直接使用</p><p> 方法二：</p><p>this.$store.state.全局数据名称<br>方法三：</p><p>从vuex中按需导入mapstate函数</p><p>import { mapState } from “vuex”;<br>注意：当前组件需要的全局数据，映射为当前组件computed属性</p><p>5.2 Mutation<br>更改 Vuex 的 store 中的状态的唯一方法是提交 mutation。Vuex 中的 mutation 非常类似于事件：每个 mutation 都有一个字符串的事件类型 (type)和一个回调函数 (handler)。这个回调函数就是我们实际进行状态更改的地方，并且它会接受 state 作为第一个参数：</p><p> 在vuex中定义：</p><p>其中参数state参数是必须的，也可以自己传递一个参数，如下代码，进行计数器的加减操作，加法操作时可以根据所传递参数大小进行相加，减法操作没有传参每次减一</p><p>在组件中使用：</p><p> 定义两个按钮进行加减操作</p><p> 方法一：</p><p>注意：使用commit触发Mutation操作</p><p>methods:{<br>&#x2F;&#x2F;加法<br>btn(){<br>this.$store.commit(“addcount”,10)     &#x2F;&#x2F;每次加十<br>}<br>&#x2F;&#x2F;减法<br>btn1(){<br>this.$store.commit(“reduce”)<br>}<br>}<br>方法二：</p><p>使用辅助函数进行操作，具体方法同上</p><p> 5.3  Action ——进行异步操作<br>Action和Mutation相似，一般不用Mutation 异步操作，若要进行异步操作，使用Action</p><p>原因：为了方便devtools打个快照存下来，方便管理维护。所以说这个只是规范，而不是逻辑的不允许，只是为了让这个工具能够追踪数据变化而已</p><p>在vuex中定义：</p><p>将上面的减法操作改为异步操作</p><p> 在组件中使用：</p><p>方法一：</p><p>直接使用  dispatch触发Action函数</p><p>this.$store.dispatch(“asynAdd”)<br>方法二：</p><p>使用辅助函数</p><p> 5.4 Getter<br>类似于vue中的computed，进行缓存，对于Store中的数据进行加工处理形成新的数据</p><p> 具体操作类似于前几种，这里不做具体说明</p><p>5.5  Modules<br>当遇见大型项目时，数据量大，store就会显得很臃肿</p><p>为了解决以上问题，Vuex 允许我们将 store 分割成模块（module）。每个模块拥有自己的 state、mutation、action、getter、甚至是嵌套子模块——从上至下进行同样方式的分割：</p><p> 默认情况下，模块内部的 action 和 mutation 仍然是注册在全局命名空间的——这样使得多个模块能够对同一个 action 或 mutation 作出响应。</p><p>如果希望你的模块具有更高的封装度和复用性，你可以通过添加 namespaced: true 的方式使其成为带命名空间的模块。当模块被注册后，它的所有 getter、action 及 mutation 都会自动根据模块注册的路径调整命名。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 学习 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Vue </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>我的第一篇BLOG</title>
       <link href="/2023/03/19/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87BLOG/"/>
       <url>/2023/03/19/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87BLOG/</url>

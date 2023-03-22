@@ -63,3 +63,9 @@
 #page-site-info{
    font-family: 'Font Awesome 5 Free';
 }
+.read-mode #post{
+    background-color: white;
+}
+.footer-icon{
+    margin: 1%;
+}
