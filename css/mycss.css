@@ -36,7 +36,7 @@
   }
 #content-inner{
         /* 设置边距 */
-        padding: 40px 90px;
+        padding: 40px 10%;
 }
 #page-header{
     background: transparent;
@@ -54,9 +54,12 @@
 #archive{
     background: rgba(255,255,255,.5);
 }
-#aplayer-xFZeggHR{
-    padding: 20px;
+#article-container>div{
+    padding: 10px;
 }
 #aside-content .card-widget{
     background: rgba(255,255,255,.5);
+}
+#page-site-info{
+   font-family: 'Font Awesome 5 Free';
 }
