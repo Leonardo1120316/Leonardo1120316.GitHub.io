@@ -4,6 +4,81 @@
   
     
     <entry>
+      <title>null和undefined区别</title>
+      <link href="/2023/03/24/null%E5%92%8Cundefined%E5%8C%BA%E5%88%AB/"/>
+      <url>/2023/03/24/null%E5%92%8Cundefined%E5%8C%BA%E5%88%AB/</url>
+      
+        <content type="html"><![CDATA[<h2 id="一、null与undefined"><a href="#一、null与undefined" class="headerlink" title="一、null与undefined##"></a>一、null与undefined##</h2><p>undefined是全局对象的一个属性</p><p>当一个变量没有被赋值或者一个函数没有返回值或者访问对象某个不存在属性或者定义形参没有传实参</p><p>null代表对象的值未设定</p><p>对象没有初始化时的值为null</p><h2 id="二、数据分类的本质区别"><a href="#二、数据分类的本质区别" class="headerlink" title="二、数据分类的本质区别##"></a><strong>二、数据分类的本质区别</strong>##</h2><p>基本数据类型直接存储在栈内存中，占据内存小，属于频繁被调用的数据，引用数据类型存储在堆内存中，在占内存中存储数据指针，当解释器寻找引用值时，会检索其在栈中的地址，取得地址后从堆内存中获取实体</p><p>##<strong>三、</strong>typeof判断null和undefined类型##</p><p>undefined通过typeof判断值为undefined（typeof函数返回值为String类型）</p><p>null通过typeof返回值为object</p><p>总结：undefined是对象未被赋予初始值，null是对象被人为赋予空对象</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> CSS </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CSS </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>JavaScript判断对象类型的方法</title>
+      <link href="/2023/03/24/js%E5%88%A4%E6%96%AD%E7%B1%BB%E5%9E%8B%E6%96%B9%E6%B3%95/"/>
+      <url>/2023/03/24/js%E5%88%A4%E6%96%AD%E7%B1%BB%E5%9E%8B%E6%96%B9%E6%B3%95/</url>
+      
+        <content type="html"><![CDATA[<h2 id="一、四种返回类型的方法"><a href="#一、四种返回类型的方法" class="headerlink" title="一、四种返回类型的方法##"></a>一、四种返回类型的方法##</h2><p>1.typeof   基本类型返回其类型，引用类型除函数返回function，其余返回object</p><p>2.instanceof  主要用于区分引用数据类型，原理是检测当前的类型在当前实例的原型链上</p><p>原型链：未实例化对象通过prototype或者实例化对象通过_proto获得原型对象，再使用proto向上获取原型对象的实例对象即object，再由object向上得到null的链条</p><p><img src="https://img-blog.csdnimg.cn/1ccbdee4f468444dae832fb574ec733d.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl81NjUwNTg0NQ==,size_16,color_FFFFFF,t_70#pic_center"></p><p>使用例子</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 定义构造函数</span><br><span class="line">function C () &#123;&#125;</span><br><span class="line">function D () &#123;&#125;</span><br><span class="line">// 实例化一个 o 对象</span><br><span class="line">var o = new C()</span><br><span class="line">// true，true --&gt; C.prototype 在 o 的原型链上</span><br><span class="line">console.log(o instanceof C)</span><br></pre></td></tr></table></figure><p>3.Object.prototype.toString.call()</p><p>判断类型的确切类型，尤其对于object，相较于typeof将数组，日期，正则等引用类型都返回object</p><p>object.prototype.toString.call返回更为详细</p><p>例如</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">判断原生引用类型：</span><br><span class="line"></span><br><span class="line">a 函数类型</span><br><span class="line"></span><br><span class="line">Function fn()&#123;console.log(“test”);&#125;</span><br><span class="line">Object.prototype.toString.call(fn);//”[object Function]”</span><br><span class="line">b 日期类型</span><br><span class="line"></span><br><span class="line">var date = new Date();</span><br><span class="line">Object.prototype.toString.call(date);//”[object Date]”</span><br><span class="line">c 数组类型</span><br><span class="line"></span><br><span class="line">var arr = [1,2,3];</span><br><span class="line">Object.prototype.toString.call(arr);//”[object Array]”</span><br><span class="line">d 正则表达式</span><br><span class="line"></span><br><span class="line">var reg = /[hbc]at/gi;</span><br><span class="line">Object.prototype.toString.call(arr);//”[object Array]”</span><br><span class="line">e 自定义类型</span><br><span class="line"></span><br><span class="line">function Person(name, age) &#123;</span><br><span class="line">    this.name = name;</span><br><span class="line">    this.age = age;</span><br><span class="line">&#125;</span><br><span class="line">var person = new Person(&quot;Rose&quot;, 18);</span><br><span class="line">Object.prototype.toString.call(arr); //”[object Object]”</span><br></pre></td></tr></table></figure><p>4.constructor</p><p>区分数组函数对象类型，且不会把原型链上的类加入进来</p><p>示例1</p><p>下面代码可以检测对象和数组的类型，以此可以过滤对象、数组。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var o = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">var a =[];</span><br><span class="line"></span><br><span class="line">if (o.constructor == Object) document.write(&quot;o 是对象&quot;);</span><br><span class="line"></span><br><span class="line">if (a.constructor == Array) document.write(&quot;a 是数组&quot;);</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>结合 typeof 运算符和 constructor 原型属性，可以检测不同类型的数据。表中列举了常用类型数据的检测结果。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> JavaScript </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JavaScript </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>JavaScript的数据类型</title>
+      <link href="/2023/03/24/JavaScript%E7%B1%BB%E5%9E%8B/"/>
+      <url>/2023/03/24/JavaScript%E7%B1%BB%E5%9E%8B/</url>
+      
+        <content type="html"><![CDATA[<h2 id="一、基础数据类型简单数据类型"><a href="#一、基础数据类型简单数据类型" class="headerlink" title="一、基础数据类型简单数据类型##"></a>一、基础数据类型简单数据类型##</h2><p>Number,string,boolean,bigInt,Symbol,Null,Undefined</p><h2 id="二、引用数据类型复杂数据类型"><a href="#二、引用数据类型复杂数据类型" class="headerlink" title="二、引用数据类型复杂数据类型##"></a>二、引用数据类型复杂数据类型##</h2><p>通常用Object代表，普通对象，数组，数组，正则表达式，日期，Math函数都属于Object</p><p>##三、数据分类的本质区别##</p><p>基本数据类型直接存储在栈中，属于被频繁调用的数据，引用数据类型存储在堆内存中，占据空间大。当解释器寻找引用值时，会检索其在栈中的地址，取得地址后会从堆中获得实体</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> JavaScript </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JavaScript </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>三栏布局实现方法</title>
       <link href="/2023/03/23/%E4%B8%89%E6%A0%8F%E5%B8%83%E5%B1%80%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95/"/>
       <url>/2023/03/23/%E4%B8%89%E6%A0%8F%E5%B8%83%E5%B1%80%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95/</url>
