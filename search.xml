@@ -4,6 +4,81 @@
   
     
     <entry>
+      <title>js继承方法</title>
+      <link href="/2023/03/26/js%E7%BB%A7%E6%89%BF%E6%96%B9%E6%B3%95/"/>
+      <url>/2023/03/26/js%E7%BB%A7%E6%89%BF%E6%96%B9%E6%B3%95/</url>
+      
+        <content type="html"><![CDATA[<p>##一、js中的继承</p><p>js中的继承是一种委托机制，对象将方法和属性委托到原型上，这样多个对象就可以共享一个原型上的属性和方法，这个过程没有复制粘贴。js继承依靠于原型链，原型可以是一个对象的原型也可以是另外一个原型的实例</p><p>##二、js的六种继承方法</p><p>1.原型链继承：子类构造函数的prototype指向父类构造函数new出的对象</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">function father()&#123;</span><br><span class="line">  this.name = &quot;Jack&quot;</span><br><span class="line">  this.age = 40</span><br><span class="line">&#125;</span><br><span class="line">function child()&#123;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br><span class="line">//设置继承关系让child继承father</span><br><span class="line">child.prototype = new father()</span><br><span class="line">var children = new child()</span><br><span class="line">console.log(children.name)</span><br><span class="line">//输出Jack</span><br></pre></td></tr></table></figure><p>2.原型继承的缺点</p><p>如果father原型中成员为引用数据类型，例如数组，操作该数组例如push会改变所有实例中的继承成员变量的值</p><p>无法向父类构造函数传输参数</p><p>3.盗用构造函数的继承方式</p><p>当使用子类构造函数prototype继承父类的构造函数时，无法通过子类构造函数向父类构造函数输入参数，此时使用盗用构造函数的方法，即在子类构造函数定义中写入调用父类构造函数的句子，并通过call方法将构造函数指向修改为当前构造函数的指向（即新new出来的子类实例）并在call函数中的第二个参数中输入传给父类构造函数的参数</p><p>PS:此时定义的父类构造函数本身需要允许传入参数</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function father(eyes)&#123;</span><br><span class="line">  this.eyes = eyes</span><br><span class="line">  this.color = &quot;pink&quot;</span><br><span class="line">&#125;</span><br><span class="line">function children(color)&#123;</span><br><span class="line">  father.call(this,color)</span><br><span class="line">&#125;</span><br><span class="line">var child = new children(&quot;pink&quot;)</span><br><span class="line">console.log(child.eyes)</span><br><span class="line">//输出结果pink</span><br></pre></td></tr></table></figure><p><strong>问题：</strong></p><ol><li><strong>必须在构造函数中定义方法，通过盗用构造函数继承的方式本质上都变成了实例自己的方法，不是公共的方法，因此失去了复用性。</strong></li><li><strong>子类不能访问父类原型上定义的方法。</strong></li></ol><h2 id="三、组合继承"><a href="#三、组合继承" class="headerlink" title="三、组合继承"></a>三、组合继承</h2><p>即同时使用原型链继承和盗用构造函数继承</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">function Person(eyes) &#123;</span><br><span class="line">    this.eyes = eyes</span><br><span class="line">    this.colors = [&#x27;white&#x27;, &#x27;yellow&#x27;, &#x27;black&#x27;]</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.getEyes = function () &#123;</span><br><span class="line">    return this.eyes</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">function YellowRace()&#123;</span><br><span class="line">    Person.call(this,&#x27;black&#x27;);// 调用构造函数并传参</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">YellowRace.prototype = new Person(); // 再次调用构造函数</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">const nz = new YellowRace();</span><br><span class="line">nz.colors.push(&#x27;green&#x27;);</span><br><span class="line"></span><br><span class="line">const laowang = new YellowRace();</span><br><span class="line"></span><br><span class="line">console.log(nz.colors); //[ &#x27;white&#x27;, &#x27;yellow&#x27;, &#x27;black&#x27;, &#x27;green&#x27; ]</span><br><span class="line">console.log(laowang.colors); //[ &#x27;white&#x27;, &#x27;yellow&#x27;, &#x27;black&#x27; ]</span><br><span class="line"></span><br><span class="line">console.log(nz.getEyes()); //black </span><br></pre></td></tr></table></figure><p>缺点：有一定资源浪费（调用了两次构造函数）</p><h2 id="四、原型式继承"><a href="#四、原型式继承" class="headerlink" title="四、原型式继承"></a>四、原型式继承</h2><p>定义函数，传入对象，在函数中将这个对象作为一个空构造函数的原型，返回这个构造函数的实例</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">//定义函数</span><br><span class="line">function obj(o)&#123;</span><br><span class="line">  function F()&#123;</span><br><span class="line">    </span><br><span class="line">  &#125;</span><br><span class="line">  F.prototype = o</span><br><span class="line">  return new F()</span><br><span class="line">&#125;</span><br><span class="line">//定义一个对象</span><br><span class="line">var h = &#123;</span><br><span class="line">  name:&quot;Jack&quot;,</span><br><span class="line">  age:19</span><br><span class="line">&#125;</span><br><span class="line">//传入上面函数</span><br><span class="line">var f = obj(h)</span><br><span class="line">console.log(f.name)</span><br><span class="line">//输出name为Jack</span><br></pre></td></tr></table></figure><p>以上函数可以简化为使用es6自带函数object.create()</p><p>当object.create()函数只有一个参数时与上面的obj函数作用相同，传入参数的意义相同</p><p>当object.create()函数含有多个参数时，后面带的是传参数</p><ol><li>使用手写的object()不能传参，使用Object.create()可以传参</li><li>原对象中的引用类型的属性会被新对象共享。</li></ol><h2 id="五、-寄生式继承"><a href="#五、-寄生式继承" class="headerlink" title="五、 寄生式继承"></a>五、 寄生式继承</h2><p>在原型继承的基础上以某种形式增强（例如加入一个新的函数）再返回这个对象</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">function inherit(o)&#123;</span><br><span class="line">    let clone = Object.create(o); // 增强对象</span><br><span class="line">    clone.sayHi = function()&#123;</span><br><span class="line">        console.log(&#x27;hi&#x27;);</span><br><span class="line">    &#125;;</span><br><span class="line">    return clone;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const nz = &#123;</span><br><span class="line">    eyes: &#x27;black&#x27;,</span><br><span class="line">    colors: [&#x27;white&#x27;, &#x27;yellow&#x27;, &#x27;black&#x27;]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const laowang = inherit(nz);</span><br><span class="line">console.log(laowang.eyes);  // black</span><br><span class="line">console.log(laowang.colors); // [ &#x27;white&#x27;, &#x27;yellow&#x27;, &#x27;black&#x27; ]</span><br><span class="line"></span><br><span class="line">laowang.sayHi(); // hi</span><br></pre></td></tr></table></figure><h2 id="六、寄生式组合继承"><a href="#六、寄生式组合继承" class="headerlink" title="六、寄生式组合继承"></a>六、寄生式组合继承</h2>]]></content>
+      
+      
+      <categories>
+          
+          <category> 前端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JavaScript </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>js new关键字</title>
+      <link href="/2023/03/26/JSnew/"/>
+      <url>/2023/03/26/JSnew/</url>
+      
+        <content type="html"><![CDATA[<p>##一、js new之后执行操作</p><p>1.创建一个空对象</p><p>2.为该对象添加属性_proto__，关联到对象的原型上</p><p>3.将创建的对象作为this的上下文</p><p>4.如果该函数没有return返回值，则返this</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 前端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JavaScript </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>defer和async区别</title>
+      <link href="/2023/03/26/defer%E5%92%8Casync/"/>
+      <url>/2023/03/26/defer%E5%92%8Casync/</url>
+      
+        <content type="html"><![CDATA[<p>##一、defer和async</p><script src="script.js"></script><p>没有 defer 或 async，浏览器会立即加载并执行指定的脚本，“立即”指的是在渲染该 script 标签之下的文档元素之前，也就是说不等待后续载入的文档元素，读到就加载并执行。</p><script async src="script.js"></script><p>有 async，加载和渲染后续文档元素的过程将和 script.js 的加载与执行并行进行（异步）。</p><script defer src="myscript.js"></script><p>有 defer，加载后续文档元素的过程将和 script.js 的加载并行进行（异步），但是 script.js 的执行要在所有元素解析完成之后，DOMContentLoaded事件触发之前完成。</p><p><img src="https://img-blog.csdnimg.cn/20190924222353217.png"></p><p>正常js执行在html解释中，读取到js代码，就截断html解释，加载并执行js</p><p>async的js允许异步加载js，当是需要解释完成html后才会执行js</p><p>defer允许js异步加载，并在加载完成后截断html解释，执行js后继续解释</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 前端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JavaScript </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>扩展运算符（...）</title>
       <link href="/2023/03/25/%E6%89%A9%E5%B1%95%E8%BF%90%E7%AE%97%E7%AC%A6%EF%BC%88...%EF%BC%89/"/>
       <url>/2023/03/25/%E6%89%A9%E5%B1%95%E8%BF%90%E7%AE%97%E7%AC%A6%EF%BC%88...%EF%BC%89/</url>
@@ -54,11 +129,11 @@
     
     
     <entry>
-      <title>Js全局执行上下文</title>
+      <title>apply,bind,call函数改变this指向</title>
       <link href="/2023/03/25/%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87/"/>
       <url>/2023/03/25/%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87/</url>
       
-        <content type="html"><![CDATA[<p>##一、什么是执行上下文</p><p>执行上下文是js的执行环境，它存放了js的变量，作用域链规则，和this的指向</p><p>执行上下文分为三种：</p><p>全局执行上下文：当代码编译时创建</p><p>函数执行上下文：当执行到某一函数时创建</p><p>eval执行上下文：执行eval函数时创建</p><p>##二、javascript代码的执行过程</p><p>一段js代码的执行过程中，先是会进行编译阶段，js引擎会将代码进行编译，再进入执行阶段</p><p>也就是说，js代码是按照“段”来执行的，具体就是全局代码就是一段代码，函数执行也算一段代码，编译也是按照“段”来编译的，也就是一整个js代码会出现多个编译阶段</p><p>编译阶段<br>编译阶段是一个很复杂的过程，这里只是简单的介绍：</p><p>编译阶段完成两件事情：创建执行上下文和生成可执行代码<br>执行上下文就包括变量环境和词法环境和this指向等，创建执行上下文的过程：<br>如果是普通变量的话，js引擎会将该变量添加到变量环境中并初始化为undefined<br>如果是函数声明的话，js引擎会将函数定义添加到变量环境中，然后将函数名执行该函数的位置（内存）<br>接着，js引擎就会把其他的代码编译为字节码，生成可执行代码<br>执行阶段<br>编译阶段完成后，js引擎开始执行可执行代码，按照顺序一行一行执行，当遇到函数或者变量时，会在变量环境中寻找，找不到的话就会报错</p><p>如果遇到赋值语句时，就会将值赋值给变量</p><h2 id="三、this指向"><a href="#三、this指向" class="headerlink" title="三、this指向"></a>三、this指向</h2><h4 id="1-为什么需要this？"><a href="#1-为什么需要this？" class="headerlink" title="1.为什么需要this？"></a>1.为什么需要this？</h4><p>编程中需要调用对象自身的成员变量，而JavaScript的作用域链规则无法完成</p><p>####2.不同执行上下文的this机制</p><p>全局上下文，this指向全局变量</p><p>函数上下文中，按函数的调用方式区分</p><p>全局环境中调用一个函数，则函数的this指向全局变量window，如果使用对象.成员函数，this指向的时调用函数的对象。</p><p>普通函数中this严格模式下undefined，非严格模式指向window</p><p>new 关键字构建好了一个新对象，并且构造函数中的 this 其实就是新对象本身。</p>]]></content>
+        <content type="html"><![CDATA[<p>##一、普通函数的this指向</p><p>1.对于不同调用方法指向不同</p><p>对于一个对象的成员函数，利用对象调用函数时this指向该成员</p><p>直接调用函数函数this指向window</p><p>2.apply,call,bind改变函数this指向</p><p>apply(this指向,arrParams) call(this指向,params) bind(this指向,params)</p><p>call，bind分别输入参数，call输入参数组成的数组</p><p>call，apply在输入后执行该函数，bind在输入后返回修改指向的函数</p><p>例子</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//定义一个c函数</span><br><span class="line">function c()&#123;</span><br><span class="line">        console.log(this)</span><br><span class="line">    &#125;</span><br><span class="line">//执行c输出window</span><br><span class="line">    c()</span><br><span class="line">    var b = 2;</span><br><span class="line">    var a = 1;</span><br><span class="line">//call修改指向输出指向为a</span><br><span class="line">    c.call(a)</span><br><span class="line">//bind修改指向为b，返回函数d</span><br><span class="line">    var d = c.bind(b)</span><br><span class="line">    d();</span><br></pre></td></tr></table></figure>]]></content>
       
       
       <categories>
