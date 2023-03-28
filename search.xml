@@ -4,6 +4,56 @@
   
     
     <entry>
+      <title>页面的cookie，local Storage，Session Storage</title>
+      <link href="/2023/03/28/cookie%EF%BC%8Csession%EF%BC%8Ctoken/"/>
+      <url>/2023/03/28/cookie%EF%BC%8Csession%EF%BC%8Ctoken/</url>
+      
+        <content type="html"><![CDATA[<p>##一、异同点</p><p>相同：都是写在浏览器的，存储在浏览器的</p><p>不同点：cookie由后端写入，session和local storage由前端写入</p><p>cookie的生命周期由后端设定，local storage需要手动清除否则不会删除，session在页面关闭时删除</p><p>前端发送请求时会自动携带cookie数据</p><h2 id="二、token"><a href="#二、token" class="headerlink" title="二、token"></a>二、token</h2><p>token通常用于判断用户是否登录，它存储在cookie中，它内部包含的信息有：uid(用户唯一的身份标识)、time(当前时间的时间戳)、sign（签名，token 的前几位以哈希算法压缩成的一定长度的十六进制字符串） <code>token</code>可以存放在<code>Cookie</code>中，<code>token</code> 是否过期，应该由后端来判断，不该前端来判断，所以<code>token</code>存储在<code>cookie</code>中只要不设置<code>cookie</code>的过期时间就ok了，如果 <code>token</code> 失效，就让后端在接口中返回固定的状态表示<code>token</code> 失效，需要重新登录，再重新登录的时候，重新设置 <code>cookie</code> 中的 <code>token</code> 就行。   </p><p> token认证流程 1. 客户端使用用户名跟密码请求登录 2. 服务端收到请求，去验证用户名与密码 3. 验证成功后，服务端签发一个 token ，并把它发送给客户端 4. 客户端接收 token 以后会把它存储起来，比如放在  cookie 里或者 localStorage 里 5. 客户端每次发送请求时都需要带着服务端签发的 token（把 token 放到 HTTP 的 Header 里） 6. 服务端收到请求后，需要验证请求里带有的 token ，如验证成功则返回对应的数据</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 前端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JavaScript </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>js实现异步的方法</title>
+      <link href="/2023/03/28/JS%E5%AE%9E%E7%8E%B0%E5%BC%82%E6%AD%A5%E7%9A%84%E6%96%B9%E6%B3%95/"/>
+      <url>/2023/03/28/JS%E5%AE%9E%E7%8E%B0%E5%BC%82%E6%AD%A5%E7%9A%84%E6%96%B9%E6%B3%95/</url>
+      
+        <content type="html"><![CDATA[<p>##一、回调函数</p><p>什么是JavaScript回调函数</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function A(callback)&#123;</span><br><span class="line">  console.log(&quot;A&quot;)</span><br><span class="line">  callback()</span><br><span class="line">&#125;</span><br><span class="line">function B()&#123;</span><br><span class="line">  console.log(&quot;B&quot;)</span><br><span class="line">&#125;</span><br><span class="line">A(B)</span><br><span class="line">//这里使用了回调函数A</span><br></pre></td></tr></table></figure><p>当B函数是A函数的入参，且A函数使用了B函数，我们把A函数称为回调函数</p><p>setTimeout，ajax回调，dom回调都是回调函数，都为异步方法</p><h2 id="二、Promise"><a href="#二、Promise" class="headerlink" title="二、Promise"></a>二、Promise</h2><p>promise本身是同步的，promise的then的内容是异步</p><h2 id="三、Generator函数（ES6"><a href="#三、Generator函数（ES6" class="headerlink" title="三、Generator函数（ES6)"></a>三、Generator函数（ES6)</h2><p>Generator分段函数是一个可以暂停执行的函数（分段函数）</p><p>使用*定义分段函数，在函数中封装了多个状态，使用yield和return分段，yield标记函数暂停位置，return表示结束返回，调用时使用next()方法使指针指向下一个状态</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function *myGenerator()&#123;</span><br><span class="line">  yield &quot;confusing&quot;</span><br><span class="line">  yield &quot;interesting&quot;</span><br><span class="line">  yield &quot;relaxing&quot;</span><br><span class="line">  return &quot;amazing&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>使用分段函数的next()方法</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var h = myGenerator()</span><br><span class="line">console.log(h.next())</span><br><span class="line">//输出&#123;value: &#x27;confusing&#x27;, done: false&#125;</span><br></pre></td></tr></table></figure><p>注意输出为一个对象包含value和done</p><h2 id="四、async，await函数（ES7）"><a href="#四、async，await函数（ES7）" class="headerlink" title="四、async，await函数（ES7）"></a>四、async，await函数（ES7）</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">async function mysw()&#123;</span><br><span class="line">    let a = await new Promise((resolve) =&gt; &#123;</span><br><span class="line">        resolve(&quot;a&quot;);</span><br><span class="line">    &#125;);</span><br><span class="line">    console.log(a);</span><br><span class="line">    return 1;</span><br><span class="line">&#125;</span><br><span class="line">mysw().then((res) =&gt; &#123;</span><br><span class="line">    console.log(res);//输出a,1,返回一个PromiseResult为undefined的promise</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><p>看起来async&#x2F;await和Generator用法相似，把星号换成async，把yield换成await，它们区别在于：</p><p>1，async函数自带执行器</p><p>2，语义清楚</p><p>3，async函数的返回值是 Promise 对象，Generator 函数的返回值是 Iterator 对象</p><p>4，yield命令后面只能是 Thunk 函数或 Promise 对象，而async函数的await命令后面，可以是 Promise 对象和原始类型的值**</p><p>await语句后面的内容需要等待await的内容执行完才能执行（宏任务除外），可以把await当成是then的语法糖，await之后的内容就相当于then里的回调函数，是异步，根据先微后宏的顺序继续执行</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 前端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JavaScript </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>js继承方法</title>
       <link href="/2023/03/26/js%E7%BB%A7%E6%89%BF%E6%96%B9%E6%B3%95/"/>
       <url>/2023/03/26/js%E7%BB%A7%E6%89%BF%E6%96%B9%E6%B3%95/</url>
