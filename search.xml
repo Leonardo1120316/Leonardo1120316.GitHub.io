@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>初始后端springboot</title>
+      <link href="/2023/04/03/%E5%88%9D%E8%AF%95%E5%90%8E%E7%AB%AFspringboot/"/>
+      <url>/2023/04/03/%E5%88%9D%E8%AF%95%E5%90%8E%E7%AB%AFspringboot/</url>
+      
+        <content type="html"><![CDATA[<p>##一、什么是SpringBoot</p><p>官方上Spring Boot是由Pivotal团队提供的全新框架，其设计目的是用来简化spring应用的初始搭建以及开发过程。该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。</p><p>springboot是对spring的优化扩展，使其能够快速使用，快速启动</p><p>sping是一个开源的J2EE框架，实现了快速注入</p><h2 id="二、Springboot分层"><a href="#二、Springboot分层" class="headerlink" title="二、Springboot分层"></a>二、Springboot分层</h2><p>springboot采用了分层方式将控制实体，服务，业务逻辑与工具分成多个包，通过框架注入，将实体类转换为bean交由框架管理，实现对实体的操控，实现业务逻辑。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 后端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> SpringBoot </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>页面的cookie，local Storage，Session Storage</title>
       <link href="/2023/03/28/cookie%EF%BC%8Csession%EF%BC%8Ctoken/"/>
       <url>/2023/03/28/cookie%EF%BC%8Csession%EF%BC%8Ctoken/</url>
